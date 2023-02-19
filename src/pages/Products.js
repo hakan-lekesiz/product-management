@@ -91,8 +91,8 @@ const Products = () => {
         }
     };
 
-    const removeCategory = () => {
-        const deletedList = [...list.filter(x => x.id !== formData.id)]
+    const removeProduct = () => {
+        const deletedList = [...list.filter(x => x.id !== formData.id)];
         setList(deletedList);
         localStorage.setItem("productList", JSON.stringify(deletedList));
         setShowDeleteModal(false);
@@ -212,7 +212,7 @@ const Products = () => {
 
                         <hr />
 
-                        <div className={"form-img-container"+(formSubmitted && formData.imgs.length === 0 ? " error" : "")}>
+                        <div className={"form-img-container" + (formSubmitted && formData.imgs.length === 0 ? " error" : "")}>
                             <label>
                                 Görseller
                             </label> <br /><br />
@@ -308,6 +308,24 @@ const Products = () => {
                 </Modal>
             }
 
+            {
+                showDeleteModal &&
+                <Modal closeModal={() => setShowDeleteModal(false)}>
+                    <div>
+                        <h3>
+                            Ürünü silmek istediğinizden emin misin?
+                        </h3>
+                        <div className="removeButtons">
+                            <button onClick={removeProduct}>Evet</button>
+                            <button onClick={() => {
+                                setShowDeleteModal(false);
+                                setFormData(null);
+                            }
+                            }>Hayır</button>
+                        </div>
+                    </div>
+                </Modal>
+            }
 
         </>
     );
