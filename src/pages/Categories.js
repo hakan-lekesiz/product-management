@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Modal from "../components/Modals/defaultModal";
 const editIcon = require('../content/img/edit.png');
 
@@ -120,7 +121,9 @@ const Categories = () => {
                         <ul key={category.id}>
                             <li>{index + 1}</li>
                             <li>{category.id}</li>
-                            <li className="flex-1">{category.name}</li>
+                            <li className="flex-1">
+                                <Link to={"/urunler?ctg=" + category.id}> {category.name}</Link>
+                            </li>
                             <li className="action-buttons">
                                 <a href="#" onClick={() => {
                                     setShowModal(true);

@@ -55,7 +55,7 @@ main {
 
     h1 {}
 
-    a {
+    .add-btn {
         font-size: 24px;
         color: red;
         transition: transform 0.25s;
@@ -63,6 +63,12 @@ main {
         &:hover {
             transform: scale(1.1);
         }
+    }
+
+    .right-side{
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 }
 

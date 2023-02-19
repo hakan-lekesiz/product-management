@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Modal from '../components/Modals/defaultModal';
 
 const initialFormData = {
@@ -14,9 +15,15 @@ const initialFormData = {
 const Products = () => {
     const [list, setList] = useState([]);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [formData, setFormData] = useState(null);
+
+    let { search } = useLocation();
+    const query = new URLSearchParams(search);
+    const queryCategoryId = query.get('ctg');
+
 
     let categories = [];
     if (localStorage.getItem("categoryList")) {
@@ -28,11 +35,19 @@ const Products = () => {
         if (localStorage.getItem("productList")) {
             setList(JSON.parse(localStorage.getItem("productList")));
         }
+
+        if (queryCategoryId) {
+            //kategorilerden birine tıklayıp gelme senaryosu
+            setSelectedCategory(queryCategoryId);
+            filterByCategoryId(queryCategoryId);
+        }
+
     }, []);
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
         setFormSubmitted(true);
+        const _list = JSON.parse(localStorage.getItem("productList"));
 
         if (formData.name) {
 
@@ -40,7 +55,7 @@ const Products = () => {
             if (formData.id) {
                 //id varsa düzenle işlemi yapılıyor
                 let editedList = [
-                    ...list.filter(x => x.id !== formData.id),
+                    ..._list.filter(x => x.id !== formData.id),
                     formData
                 ];
 
@@ -51,10 +66,10 @@ const Products = () => {
 
                 //ekleme işlemi yapılıyor
 
-                const biggestElemId = list.length > 0 ? list.sort((a, b) => b.id - a.id)[0].id : 0;
+                const biggestElemId = _list.length > 0 ? _list.sort((a, b) => b.id - a.id)[0].id : 0;
 
                 let newList = [
-                    ...list,
+                    ..._list,
                     {
                         ...formData,
                         id: biggestElemId + 1
@@ -93,7 +108,8 @@ const Products = () => {
     };
 
     const removeProduct = () => {
-        const deletedList = [...list.filter(x => x.id !== formData.id)];
+        const _list = JSON.parse(localStorage.getItem("productList"));
+        const deletedList = [..._list.filter(x => x.id !== formData.id)];
         setList(deletedList);
         localStorage.setItem("productList", JSON.stringify(deletedList));
         setShowDeleteModal(false);
@@ -104,18 +120,49 @@ const Products = () => {
         return categories.find(x => x.id === parseInt(id)).name;
     };
 
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+        filterByCategoryId(e.target.value);
+    };
+
+    const filterByCategoryId = (ctgId) => {
+        const _list = JSON.parse(localStorage.getItem("productList"));
+        if (ctgId) {
+            //bir kategori seçilmiş ise
+            const filteredList = [..._list.filter(x => x.category == ctgId)];
+            setList(filteredList);
+
+        }
+        else {
+            //kategori seçilmemiş
+            setList(_list);
+        }
+    }
+
     return (
         <>
             <div className="list-header">
                 <h1>
-                    Ürün Listesi Listesi
+                    Ürün Listesi
                 </h1>
-                <a href="#" onClick={() => {
-                    setShowModal(true);
-                    setFormData(initialFormData);
-                }}>
-                    Ekle
-                </a>
+                <div className='right-side'>
+
+                    <select name='category' value={selectedCategory} onChange={handleCategoryChange}>
+                        <option value="">Kategori Seçiniz</option>
+                        {
+                            categories.map((ctg) => (
+                                <option value={ctg.id}>{ctg.name}</option>
+                            ))
+                        }
+                    </select>
+
+                    <a className='add-btn' href="#" onClick={() => {
+                        setShowModal(true);
+                        setFormData(initialFormData);
+                    }}>
+                        Ekle
+                    </a>
+                </div>
             </div>
 
             <div className="list">
