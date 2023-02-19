@@ -23,6 +23,7 @@ const Products = () => {
         categories = JSON.parse(localStorage.getItem("categoryList"));
     }
 
+
     useEffect(() => {
         if (localStorage.getItem("productList")) {
             setList(JSON.parse(localStorage.getItem("productList")));
@@ -99,6 +100,10 @@ const Products = () => {
         resetForm();
     };
 
+    const getCategoryName = (id) => {
+        return categories.find(x => x.id === parseInt(id)).name;
+    };
+
     return (
         <>
             <div className="list-header">
@@ -137,7 +142,7 @@ const Products = () => {
                             </li>
 
                             <li className="flex-1 clamp-1">{product.description}</li>
-                            <li>{product.category}</li>
+                            <li>{getCategoryName(product.category)}</li>
                             <li>{product.price}</li>
 
                             <li className="action-buttons">
