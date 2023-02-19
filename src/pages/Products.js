@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Modal from '../components/Modals/defaultModal';
+import { useSelector } from 'react-redux'
 
 const initialFormData = {
     id: "",
@@ -11,8 +12,10 @@ const initialFormData = {
     category: "",
 };
 
-
 const Products = () => {
+    const count = useSelector((state) => state.counter.value);
+    const searchParam = useSelector((state) => state.filter.searchParam);
+
     const [list, setList] = useState([]);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -24,12 +27,10 @@ const Products = () => {
     const query = new URLSearchParams(search);
     const queryCategoryId = query.get('ctg');
 
-
     let categories = [];
     if (localStorage.getItem("categoryList")) {
         categories = JSON.parse(localStorage.getItem("categoryList"));
     }
-
 
     useEffect(() => {
         if (localStorage.getItem("productList")) {
@@ -39,7 +40,7 @@ const Products = () => {
         if (queryCategoryId) {
             //kategorilerden birine tıklayıp gelme senaryosu
             setSelectedCategory(queryCategoryId);
-            filterByCategoryId(queryCategoryId);
+            filter(queryCategoryId, "");
         }
 
     }, []);
@@ -122,28 +123,42 @@ const Products = () => {
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(e.target.value);
-        filterByCategoryId(e.target.value);
+        filter(e.target.value, searchParam);
     };
 
-    const filterByCategoryId = (ctgId) => {
-        const _list = JSON.parse(localStorage.getItem("productList"));
+    const filter = (ctgId, _searchParam) => {
+
+        let filteredList = JSON.parse(localStorage.getItem("productList"));
+
         if (ctgId) {
             //bir kategori seçilmiş ise
-            const filteredList = [..._list.filter(x => x.category == ctgId)];
-            setList(filteredList);
+            filteredList = [...filteredList.filter(x => x.category == ctgId)];
+        }
 
+        if (_searchParam) {
+            filteredList = [
+                ...filteredList.filter(x =>
+                    x.name.toLocaleLowerCase().includes(_searchParam.toLocaleLowerCase()) ||
+                    x.description.toLocaleLowerCase().includes(_searchParam.toLocaleLowerCase())
+                )
+            ];
         }
-        else {
-            //kategori seçilmemiş
-            setList(_list);
-        }
-    }
+
+        setList(filteredList);
+    };
+ 
+    useEffect(() => {
+         
+        filter(selectedCategory, searchParam);
+
+    }, [searchParam]);
+    
 
     return (
         <>
             <div className="list-header">
                 <h1>
-                    Ürün Listesi
+                    Ürün Listesi  <span>Count = {count}</span>
                 </h1>
                 <div className='right-side'>
 

@@ -1,7 +1,27 @@
 
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setSearchParam } from "../../store/features/filter/filterSlice";
+import { setEmail, setName, setLastName } from "../../store/features/user/userSlice";
 
 const Header = () => {
+    const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.user);
+    const counter = useSelector((state) => state.counter);
+    const searchParam = useSelector((state) => state.filter.searchParam);
+
+    console.log(user.name);
+    console.log(user.email);
+    console.log(user.lastName);
+
+    const login = () => {
+        debugger
+        dispatch(setName("Hakan"));
+        dispatch(setLastName("Lekesiz"));
+        dispatch(setEmail("hakan.lekesiz@gmail.com"));
+    };
+
 
     return (
         <header className="header-01">
@@ -18,6 +38,25 @@ const Header = () => {
                     </li>
                 </ul>
             </nav>
+            <div>
+
+                <input type="text" value={searchParam} onChange={(e) => dispatch(setSearchParam(e.target.value))} placeholder="Ara..." />
+
+                {
+                    "counter=" + counter.value
+                }
+
+                {
+                    user.name && (user.name + " " + user.lastName)
+                }
+
+                {
+                    !user.name &&
+                    <button onClick={login}>
+                        Giriş Yap
+                    </button>
+                }
+            </div>
 
         </header>
     );
