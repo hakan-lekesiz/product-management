@@ -1,0 +1,18 @@
+#aside-menu {
+    background-color: aquamarine;
+    width: 200px;
+    height: 100%;
+    padding: 24px;
+
+    ul {
+        li {
+            margin-bottom: 16px;
+
+            a {
+                color: #000;
+                font-size: 20px;
+                font-weight: 600;
+            }
+        }
+    }
+}
