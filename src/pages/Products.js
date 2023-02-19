@@ -12,8 +12,7 @@ const initialFormData = {
     category: "",
 };
 
-const Products = () => {
-    const count = useSelector((state) => state.counter.value);
+const Products = () => { 
     const searchParam = useSelector((state) => state.filter.searchParam);
 
     const [list, setList] = useState([]);
@@ -148,17 +147,14 @@ const Products = () => {
     };
  
     useEffect(() => {
-         
         filter(selectedCategory, searchParam);
-
     }, [searchParam]);
     
-
     return (
         <>
             <div className="list-header">
                 <h1>
-                    Ürün Listesi  <span>Count = {count}</span>
+                    Ürün Listesi
                 </h1>
                 <div className='right-side'>
 

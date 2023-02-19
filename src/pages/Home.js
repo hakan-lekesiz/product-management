@@ -1,10 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { addItemToBasket } from '../store/features/basket/basketSlice';
 import { decrement, increment } from '../store/features/counter/counterSlice'
 
 
 const Home = () => {
     const dispatch = useDispatch();
-    const count = useSelector((state) => state.counter.value)
+    const count = useSelector((state) => state.counter.value);
+    const basket = useSelector((state) => state.basket);
+
+    const list = JSON.parse(localStorage.getItem("productList"));
 
     return (
         <>
@@ -25,6 +29,41 @@ const Home = () => {
                     </button>
                 </div>
             </div>
+
+            <div>
+
+                {
+                    list.map((product) => (
+                        <ul key={product.id} className="d-flex">
+
+                            <li className='clamp-1'>{product.name}</li>
+
+                            <li>
+                                {
+                                    !basket.items.some(x => x.id === product.id) &&
+
+                                    <a href="#" onClick={() => {
+
+                                        dispatch(addItemToBasket(
+                                            [
+                                                product,
+                                                ...basket.items
+                                            ]
+                                        ));
+
+                                    }
+                                    }>
+                                        <img style={{ width: "28px" }} src={"https://cdn-icons-png.flaticon.com/512/3721/3721818.png"} />
+                                    </a>
+                                }
+
+                            </li>
+                        </ul>
+                    ))
+                }
+
+            </div>
+
         </>
     );
 }

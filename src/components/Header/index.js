@@ -8,15 +8,11 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const user = useSelector((state) => state.user);
-    const counter = useSelector((state) => state.counter);
     const searchParam = useSelector((state) => state.filter.searchParam);
+    const basket = useSelector((state) => state.basket);
 
-    console.log(user.name);
-    console.log(user.email);
-    console.log(user.lastName);
 
     const login = () => {
-        debugger
         dispatch(setName("Hakan"));
         dispatch(setLastName("Lekesiz"));
         dispatch(setEmail("hakan.lekesiz@gmail.com"));
@@ -38,13 +34,24 @@ const Header = () => {
                     </li>
                 </ul>
             </nav>
-            <div>
+            <div className="d-flex" style={{ alignItems: "center", gap: "12px" }}>
+
+                <div className="basket-container">
+                    <a href="#">
+                        <img style={{ width: "28px" }} src={"https://cdn-icons-png.flaticon.com/512/3721/3721818.png"} />
+                    </a>
+                    {
+                        basket.items.length > 0 &&
+                        <span>{basket.items.length}</span>
+                    }
+                </div>
+
+
+
+
+
 
                 <input type="text" value={searchParam} onChange={(e) => dispatch(setSearchParam(e.target.value))} placeholder="Ara..." />
-
-                {
-                    "counter=" + counter.value
-                }
 
                 {
                     user.name && (user.name + " " + user.lastName)
@@ -58,7 +65,7 @@ const Header = () => {
                 }
             </div>
 
-        </header>
+        </header >
     );
 }
 
