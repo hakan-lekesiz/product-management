@@ -10,6 +10,7 @@ const Header = () => {
     const user = useSelector((state) => state.user);
     const searchParam = useSelector((state) => state.filter.searchParam);
     const basket = useSelector((state) => state.basket);
+    const count = useSelector((state) => state.counter.value);
 
 
     const login = () => {
@@ -24,7 +25,7 @@ const Header = () => {
             <nav className="c-wrapper">
                 <ul>
                     <li>
-                        <Link to="/">Home</Link>
+                        <Link to="/">Home {count}</Link>
                     </li>
                     <li>
                         <Link to="/kategoriler">Kategoriler</Link>
@@ -45,11 +46,7 @@ const Header = () => {
                         <span>{basket.items.length}</span>
                     }
                 </div>
-
-
-
-
-
+ 
 
                 <input type="text" value={searchParam} onChange={(e) => dispatch(setSearchParam(e.target.value))} placeholder="Ara..." />
 

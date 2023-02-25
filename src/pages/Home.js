@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { addItemToBasket } from '../store/features/basket/basketSlice';
 import { decrement, increment } from '../store/features/counter/counterSlice'
@@ -8,7 +9,14 @@ const Home = () => {
     const count = useSelector((state) => state.counter.value);
     const basket = useSelector((state) => state.basket);
 
-    const list = JSON.parse(localStorage.getItem("productList"));
+    const list = JSON.parse(localStorage.getItem("productList")) || [];
+
+    useEffect(() => {
+        const _basket = JSON.parse(localStorage.getItem("basket"));
+        if (_basket) {
+            dispatch(addItemToBasket(_basket));
+        }
+    }, []);
 
     return (
         <>
@@ -44,12 +52,13 @@ const Home = () => {
 
                                     <a href="#" onClick={() => {
 
-                                        dispatch(addItemToBasket(
-                                            [
-                                                product,
-                                                ...basket.items
-                                            ]
-                                        ));
+                                        const newBasket = [
+                                            product,
+                                            ...basket.items
+                                        ];
+
+                                        dispatch(addItemToBasket(newBasket));
+                                        localStorage.setItem("basket", JSON.stringify(newBasket));
 
                                     }
                                     }>

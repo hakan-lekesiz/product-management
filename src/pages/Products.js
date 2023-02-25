@@ -33,7 +33,7 @@ const Products = () => {
 
     useEffect(() => {
         if (localStorage.getItem("productList")) {
-            setList(JSON.parse(localStorage.getItem("productList")));
+            setList(JSON.parse(localStorage.getItem("productList")) || []);
         }
 
         if (queryCategoryId) {
@@ -188,7 +188,7 @@ const Products = () => {
                 </ul>
 
                 {
-                    list.sort((a, b) => a.id - b.id).map((product, index) => (
+                 list&& list.length && list.sort((a, b) => a.id - b.id).map((product, index) => (
                         <ul key={product.id}>
                             <li>{index + 1}</li>
                             <li className='clamp-1'>{product.name}</li>
@@ -221,7 +221,7 @@ const Products = () => {
                     ))
                 }
                 {
-                    list.length === 0 &&
+                   list && list.length === 0 &&
                     <div className="not-result">
                         Ürün Bulunamadı lütfen bir ürün
                         <a href="#" onClick={() => {

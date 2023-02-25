@@ -11,6 +11,7 @@ export const basketSlice = createSlice({
     addItemToBasket: (state, action) => {
       state.items = action.payload
     },
+   
 
   },
 })
