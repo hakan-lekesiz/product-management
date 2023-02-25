@@ -38,15 +38,17 @@ const Header = () => {
             <div className="d-flex" style={{ alignItems: "center", gap: "12px" }}>
 
                 <div className="basket-container">
-                    <a href="#">
+                    <Link to="/sepet">
                         <img style={{ width: "28px" }} src={"https://cdn-icons-png.flaticon.com/512/3721/3721818.png"} />
-                    </a>
+                    </Link>
+ 
+
                     {
                         basket.items.length > 0 &&
                         <span>{basket.items.length}</span>
                     }
                 </div>
- 
+
 
                 <input type="text" value={searchParam} onChange={(e) => dispatch(setSearchParam(e.target.value))} placeholder="Ara..." />
 

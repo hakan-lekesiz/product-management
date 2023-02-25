@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Basket from "./pages/Basket";
 import Categories from "./pages/Categories";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
@@ -15,6 +16,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/urunler" element={<Products  />} />
           <Route path="/kategoriler" element={<Categories />} />
+          <Route path="/sepet" element={<Basket />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

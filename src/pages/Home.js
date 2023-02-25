@@ -53,7 +53,10 @@ const Home = () => {
                                     <a href="#" onClick={() => {
 
                                         const newBasket = [
-                                            product,
+                                            {
+                                                ...product,
+                                                count: 1
+                                            },
                                             ...basket.items
                                         ];
 

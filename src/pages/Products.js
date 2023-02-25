@@ -12,7 +12,7 @@ const initialFormData = {
     category: "",
 };
 
-const Products = () => { 
+const Products = () => {
     const searchParam = useSelector((state) => state.filter.searchParam);
 
     const [list, setList] = useState([]);
@@ -47,7 +47,7 @@ const Products = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         setFormSubmitted(true);
-        const _list = JSON.parse(localStorage.getItem("productList"));
+        const _list = JSON.parse(localStorage.getItem("productList")) || [];
 
         if (formData.name) {
 
@@ -65,7 +65,6 @@ const Products = () => {
             else {
 
                 //ekleme işlemi yapılıyor
-
                 const biggestElemId = _list.length > 0 ? _list.sort((a, b) => b.id - a.id)[0].id : 0;
 
                 let newList = [
@@ -145,11 +144,11 @@ const Products = () => {
 
         setList(filteredList);
     };
- 
+
     useEffect(() => {
         filter(selectedCategory, searchParam);
     }, [searchParam]);
-    
+
     return (
         <>
             <div className="list-header">
@@ -188,7 +187,7 @@ const Products = () => {
                 </ul>
 
                 {
-                 list&& list.length && list.sort((a, b) => a.id - b.id).map((product, index) => (
+                    list && list.length && list.sort((a, b) => a.id - b.id).map((product, index) => (
                         <ul key={product.id}>
                             <li>{index + 1}</li>
                             <li className='clamp-1'>{product.name}</li>
@@ -221,7 +220,7 @@ const Products = () => {
                     ))
                 }
                 {
-                   list && list.length === 0 &&
+                    list && list.length === 0 &&
                     <div className="not-result">
                         Ürün Bulunamadı lütfen bir ürün
                         <a href="#" onClick={() => {
