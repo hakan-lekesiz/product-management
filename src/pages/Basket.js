@@ -17,10 +17,7 @@ const Basket = () => {
 
     return (
         <>
-
-
             <div>
-
                 {
                     basket && [...basket.items].sort((a, b) => b.sortNumber - a.sortNumber).map((product) => (
                         <ul key={product.id} className="d-flex">
@@ -114,7 +111,6 @@ const Basket = () => {
 
                 </div>
             </div>
-
         </>
     );
 }

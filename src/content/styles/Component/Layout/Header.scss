@@ -5,8 +5,7 @@
 @media all and (max-width: #{($mq-sm1 - 1) + "px"}) {
     .header-01 {
         height: 64px;
-        background-color: #FFF;
-
+       
         .c-wrapper {
             height: 100%;
             display: flex;
@@ -38,8 +37,7 @@
 @media all and (min-width: #{($mq-sm1) + "px"}) and (max-width: #{($mq-md - 1) + "px"}) {
     .header-01 {
         height: 76px;
-        background-color: #FFF;
-
+       
         .c-wrapper {
             height: 100%;
             display: flex;
@@ -69,8 +67,7 @@
 @media all and (min-width: #{$mq-md + "px"}) {
     .header-01 {
         height: 76px;
-        background: #FFF;
-
+       
         .c-wrapper {
             height: 100%;
             display: flex;
@@ -171,5 +168,32 @@ header{
     nav ul {
         display: flex;
         gap: 16px;
+    }
+}
+
+.light{
+    header{
+        background-color: #FFF;
+        * {
+            color: #000;
+            background-color:transparent;
+        }
+    }
+}
+
+.dark{
+    header{
+        background-color: #000;
+        * {
+            color: #FFF;
+            background-color:transparent;
+            &::placeholder{
+                color: #FFF;
+                background-color:transparent;
+            }
+            &.mode-icon{
+                background-color: #FFF;
+            }
+        }
     }
 }

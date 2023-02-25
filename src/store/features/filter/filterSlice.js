@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  searchParam: ""
+  searchParam: "",
+  selectedCategories:["10","20",],
+  sort:"descPrice"
 }
 
 export const filterSlice = createSlice({
@@ -10,6 +12,12 @@ export const filterSlice = createSlice({
   reducers: {
     setSearchParam: (state, action) => {
       state.searchParam = action.payload
+    },
+    setSelectedCategories: (state, action) => {
+      state.selectedCategories = action.payload
+    },
+    setSort: (state, action) => {
+      state.sort = action.payload
     },
 
   },

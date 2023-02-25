@@ -2,6 +2,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setSearchParam } from "../../store/features/filter/filterSlice";
+import { toggleTheme } from "../../store/features/theme/themeSlice";
 import { setEmail, setName, setLastName } from "../../store/features/user/userSlice";
 
 const Header = () => {
@@ -11,6 +12,7 @@ const Header = () => {
     const searchParam = useSelector((state) => state.filter.searchParam);
     const basket = useSelector((state) => state.basket);
     const count = useSelector((state) => state.counter.value);
+    const theme = useSelector((state) => state.theme);
 
 
     const login = () => {
@@ -25,7 +27,7 @@ const Header = () => {
             <nav className="c-wrapper">
                 <ul>
                     <li>
-                        <Link to="/">Home {count}</Link>
+                        <Link to="/">Home</Link>
                     </li>
                     <li>
                         <Link to="/kategoriler">Kategoriler</Link>
@@ -39,9 +41,12 @@ const Header = () => {
 
                 <div className="basket-container">
                     <Link to="/sepet">
-                        <img style={{ width: "28px" }} src={"https://cdn-icons-png.flaticon.com/512/3721/3721818.png"} />
+                        <div style={{ background: "red", padding: "8px" }}>
+
+                            <img style={{ width: "28px" }} src={"https://cdn-icons-png.flaticon.com/512/3721/3721818.png"} />
+                        </div>
                     </Link>
- 
+
 
                     {
                         basket.items.length > 0 &&
@@ -62,6 +67,23 @@ const Header = () => {
                         Giriş Yap
                     </button>
                 }
+
+                <button className="mode-icon"
+                    onClick={() => {
+                        dispatch(toggleTheme())
+                        localStorage.setItem("theme", (theme.mode === "dark" ? "light" : "dark"));
+                    }}
+                >
+                    {
+                        theme.mode === "dark" &&
+                        <img style={{ width: "28px" }} src="https://cdn2.iconfinder.com/data/icons/user-interface-vol-2-14/48/brightness-light-up-day-mode-512.png" />
+                    }
+                    {
+                        theme.mode === "light" &&
+                        <img style={{ width: "28px" }} src="https://cdn-icons-png.flaticon.com/512/6714/6714978.png" />
+                    }
+
+                </button>
             </div>
 
         </header >

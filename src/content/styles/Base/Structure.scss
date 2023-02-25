@@ -46,6 +46,13 @@ main {
     padding: 24px;
     overflow-y: auto;
 }
+.light{
+    .content {
+     
+        background-color: bisque; 
+    }
+
+}
 
 .list-header {
     display: flex;

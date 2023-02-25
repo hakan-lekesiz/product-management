@@ -8,13 +8,13 @@ import Products from "./pages/Products";
 
 
 const App = () => {
-
+  
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout/>}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/urunler" element={<Products  />} />
+          <Route path="/urunler" element={<Products />} />
           <Route path="/kategoriler" element={<Categories />} />
           <Route path="/sepet" element={<Basket />} />
           <Route path="*" element={<NoPage />} />
