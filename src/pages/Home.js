@@ -55,7 +55,8 @@ const Home = () => {
                                         const newBasket = [
                                             {
                                                 ...product,
-                                                count: 1
+                                                count: 1,
+                                                sortNumber: basket.items.length + 1
                                             },
                                             ...basket.items
                                         ];
